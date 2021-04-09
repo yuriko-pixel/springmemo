@@ -34,6 +34,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	        CorsConfiguration configuration = new CorsConfiguration();
 
 	        configuration.setAllowedOrigins(Collections.singletonList("http://localhost:3000"));
+
 	        configuration.setAllowedHeaders(List.of("*"));
 	        configuration.setAllowedMethods(Arrays.asList("GET","POST", "OPTIONS"));
 	        configuration.setAllowCredentials(true);
@@ -79,7 +80,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
              .csrf().disable()
              .authorizeRequests()
              .antMatchers(HttpMethod.OPTIONS).permitAll()
-             .antMatchers(HttpMethod.GET, "/api/*").authenticated()
+             .antMatchers(HttpMethod.GET, "/api/*").hasAnyRole("ADMIN")
              .anyRequest().authenticated()
              .and()
              .httpBasic();
